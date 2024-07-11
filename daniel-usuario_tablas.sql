@@ -1,3 +1,4 @@
+--creación de tablespace, usuario, tablas
 alter session set "_ORACLE_SCRIPT" = TRUE;
 
 CREATE TABLESPACE edilit_data DATAFILE 'C:\Oracle\oradata\ORCL\edilit_data' SIZE 200M AUTOEXTEND ON;
