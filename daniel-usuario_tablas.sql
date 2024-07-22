@@ -80,3 +80,39 @@ CREATE TABLE ventas
     CONSTRAINT FK_venta_factura FOREIGN KEY (id_factura) references facturas (id_factura),
     CONSTRAINT FK_venta_libro FOREIGN KEY (ISBN) references libros (ISBN)
 );
+
+alter session set "_ORACLE_SCRIPT" = TRUE;
+
+--Vista para tabla usuarios 
+CREATE OR REPLACE VIEW informacion_usuario AS
+SELECT *
+FROM usuarios;
+
+-- Vista para tabla categorias 
+CREATE OR REPLACE VIEW infromacion_categorias AS
+SELECT *
+FROM categorias;
+
+-- Vista para tabla editoriales 
+CREATE OR REPLACE VIEW informacion_editorial AS
+SELECT *
+FROM editoriales;
+
+-- Vista para tabla libros con FK de editorial
+CREATE OR REPLACE VIEW informacion_libros AS
+SELECT l.*, e.nom_editorial AS editorial_name, c.nom_categoria AS category_name
+FROM libros l
+JOIN editoriales e ON l.id_editorial = e.id_editorial
+JOIN categorias c ON l.id_categoria = c.id_categoria;
+
+-- Vista para tabla facturas con FK de usuarios 
+CREATE OR REPLACE VIEW invoice_info AS
+SELECT f.*, u.username AS nombre_usuario
+FROM facturas f
+JOIN usuarios u ON f.cedula = u.cedula;
+
+-- Vista para tabla ventas con FK de libros 
+CREATE OR REPLACE VIEW sale_info AS
+SELECT v.*, l.titulo AS titulo_libro
+FROM ventas v
+JOIN libros l ON v.ISBN = l.ISBN;
